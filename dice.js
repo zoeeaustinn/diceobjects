@@ -17,6 +17,7 @@ class Die {
         rectMode(CENTER);
         textAlign(CENTER, CENTER);
         fill("white");
+        strokeWeight(3);
         rect(this.x,this.y,this.size,this.size,6);
         if (this.frozen) {
             fill("silver");

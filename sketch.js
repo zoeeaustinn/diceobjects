@@ -9,7 +9,7 @@ function setup() {
 }
 
 function draw() {
-  background(125);
+  background("white");
   for (let i = 0; i < dice.length; i++) {
     const die = dice[i];
     die.place(60*i+30,50);
@@ -27,6 +27,14 @@ function mouseClicked() {
 }
 
 function keyPressed() {
+  shakeDice();
+}
+
+function deviceShaken() {
+  shakeDice();
+}
+
+function shakeDice() {
   let list = "values: ";
   for (let i = 0; i < dice.length; i++) {
     const die = dice[i];
