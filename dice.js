@@ -1,8 +1,8 @@
 class Die {
     
-    constructor(sides) {
-        this.size = 50;
-        this.sides = sides;
+    constructor(size) {
+        this.size = size;
+        this.sides = 6;
         this.frozen = false;
         this.place(random(width),random(height));
         this.roll();
@@ -18,7 +18,7 @@ class Die {
         textAlign(CENTER, CENTER);
         fill("white");
         strokeWeight(3);
-        rect(this.x,this.y,this.size,this.size,6);
+        rect(this.x,this.y,this.size,this.size,8);
         if (this.frozen) {
             fill("silver");
         } else {

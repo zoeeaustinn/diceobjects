@@ -2,17 +2,17 @@ let dice = [];
 let numberOfDice = 5;
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
   for (let i = 0; i < numberOfDice; i++) {
-    dice[i] = new Die(6);
+    dice[i] = new Die(50); // argument is the size of the die
   }
 }
 
 function draw() {
-  background("white");
+  background("darkolivegreen");
   for (let i = 0; i < dice.length; i++) {
     const die = dice[i];
-    die.place(60*i+30,50);
+    die.place(die.size*1.2*i+die.size, die.size*2);
     die.display();
   }
 }
