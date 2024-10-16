@@ -1,3 +1,20 @@
+/* 
+
+Die is a class for defining a single 6-sided die
+
+These properties are available:
+  - frozen (whether it's rollable or not)
+  - size (the size it should appear on screen)
+  - value (the number showing on the die)
+
+These methods are available:
+  - place(x,y) places the die at x,y in the canvas
+  - display() shows the die on the canvas
+  - roll() rolls the die if it's not frozen
+  - freeze(), unfreeze(), toggleFreeze()
+  - isTouched(x,y) returns true if x,y are in the die shape
+*/
+
 class Die {
     
     constructor(size) {
