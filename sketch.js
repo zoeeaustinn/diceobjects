@@ -14,7 +14,7 @@ const maxRounds =3;
 function setup() {
   createCanvas(1250, 1200);
 
-pumpkin = new Pumpkin(550, 0);
+pumpkin = new Pumpkin(550, -700);
 
 
 
@@ -138,7 +138,7 @@ function PumpkinUp(){
 
 function resetGame(){
   pumpkin.fallingNumber = Math.floor(random(1,10));
-  pumpkin.y = -120; //resets pumpkin position 
+  pumpkin.y = -700; //resets pumpkin position 
 
 for (let i =0; i < dice.length; i++) {
   dice[i].roll();
