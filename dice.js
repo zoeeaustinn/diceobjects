@@ -35,6 +35,7 @@ class Die {
         textAlign(CENTER, CENTER);
         fill("#eb690b");
         strokeWeight(3);
+        stroke(255);
         rect(this.x,this.y,this.size,this.size,8);
         if (this.frozen) {
             fill("#9bd21d");
@@ -42,7 +43,7 @@ class Die {
         } else {
             fill("black");
         }
-        textSize(40);
+        textSize(60);
         text(this.value, this.x, this.y, this.size, this.size);
     }
 
@@ -60,7 +61,7 @@ class Die {
     }
 
     toggleFreeze() {
-        this.frozen = ! this.frozen;
+        this.frozen = !this.frozen;
     }
 
     isTouched(x,y) {
@@ -74,6 +75,11 @@ class Die {
         } 
         return false;
     }
+
+    reset(){
+        this.value = Math.floor(random(1,10));
+    }
+    
 
 
 

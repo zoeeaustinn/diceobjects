@@ -1,14 +1,26 @@
 let dice = [];
 let numberOfDice = 5;
+let pumpkin;
+let clickedDiceCount = 0;
+let roundsPlayed =0;
+const maxRounds =3;
+//let y = 0;
+//let speed = 3;
+//let value = 0;
 //let rectWindow1;
 
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1250, 1200);
+
+pumpkin = new Pumpkin(550, 0);
+
+
+
   for (let i = 0; i < numberOfDice; i++) {
     //changes the size of the die new Die()
-    dice[i] = new Die(60); // argument is the size of the die
+    dice[i] = new Die(100); // argument is the size of the die
   }
 
 }
@@ -17,7 +29,58 @@ function draw() {
   background("#2F123D");
 
 
+
+
+  textSize(30);
+  fill(255);
+  strokeWeight(0)
+  textAlign(CENTER);
+  text ("Press SPACE to change #", 300, 300);
   
+  
+
+
+
+
+textSize(50);
+fill(255);
+textAlign(CENTER);
+text ("Match the die numbers", 260, 500);
+text ("before the pumpkin", 240, 550);
+text ("reaches the bottom.", 240, 600);
+text ("Hurry!", 240, 650);
+
+
+
+
+
+
+
+  
+push();
+translate(300, 300);
+noStroke();
+
+
+
+fill(255);
+rect(520, 100, 120, 1600);
+rect(760, 100, 120, 1600);
+
+
+fill(0);
+rect(400, 100, 120, 1600);
+rect(640, 100, 120, 1600);
+rect(880, 100, 120, 1600);
+
+pop();
+
+if (checkAllDiceMatch()){
+pumpkin.isLit = true;
+} else {
+  pumpkin.isLit = false;
+}
+
 
   // loop over the array and place+display each die
   for (let i = 0; i < dice.length; i++) {
@@ -26,104 +89,8 @@ function draw() {
     die.display(); // actually draw it on screen
   }
 
-
-
-
-
-
-
-
-
-
-  
-
-
-//Draws pumpkin
-
-  push();
-  translate(300, 300);
-
-
-  strokeWeight(10);
-  stroke(164, 73, 7);
-  fill("#eb690b");
-
-//pumpkin
-  ellipse(135, 60, 150, 300);
-  ellipse(50, 60, 150, 300);
-  ellipse(-10, 70, 200, 300);
-  ellipse(5, 80, 150, 300);
-  ellipse(50, 80, 150, 300);
-  ellipse(200, 70, 200, 300);
-  ellipse(175, 80, 150, 300);
-  ellipse(135, 80, 150, 300);
-  ellipse(95, 80, 100, 300);
-
-
-//trunk
-strokeWeight(10);
-stroke(84, 55, 10);
-fill("#784f0f");
-rect(95, -100, 30, 70);
-
-//left eye 
-translate(-40,125);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill(0);
-triangle(30, -60, 100, -60, 65, -120);
-
-//right eye
-translate(35, 0);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill(0);
-triangle(130, -60, 200, -60, 165, -120);
-
-
-
-//nose
-translate(35, 40);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill(0);
-triangle(40, -40, 90, -40, 65, -90);
-
-
-
-//mouth 
-translate(65, -5);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill(0);
-arc(0, 0, 200, 100, 0, PI, CHORD);
-
-//right tooth
-translate(20, 10);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill("#eb690b");
-square(0, 0, 20);
-
-//left tooth
-translate(-60, 20);
-strokeWeight(5);
-stroke(164, 73, 7);
-fill("#eb690b");
-square(0, 0, 25);
-
-
-
-
-
-
-pop();
-
-
-
-
-
-
+pumpkin.move();
+pumpkin.display();
 
 
 }
@@ -135,20 +102,82 @@ function mouseClicked() {
     // if the cursor is over the current die, freeze/unfreeze that die
     if (die.isTouched(mouseX,mouseY)) {
       die.toggleFreeze();
-      
+
+
+
+      if (die.value === pumpkin.fallingNumber) {
+        clickedDiceCount++;
+        pumpkin.y -= 40; // Move the pumpkin up a little bit (10 pixels)
+
+      }
     }
+  }
+
+  if (clickedDiceCount >= numberOfDice) {
+    if (checkAllDiceMatch()) {
+      pumpkin.isLit = true; // Light up the face
+      PumpkinUp();
+      resetGame();
+      roundsPlayed++;
+
+      if (roundsPlayed >= maxRounds){
+        roundsPlayed = 0;
+
+      }
+    } else {
+      pumpkin.isLit = false; // Otherwise, keep it off
+    }
+    clickedDiceCount = 0; // Reset the counter after checking
   }
 }
 
+function PumpkinUp(){
+  pumpkin.y -=1000;
+}
+
+function resetGame(){
+  pumpkin.fallingNumber = Math.floor(random(1,10));
+  pumpkin.y = -120; //resets pumpkin position 
+
+for (let i =0; i < dice.length; i++) {
+  dice[i].roll();
+  dice[i].frozen = false;
+}
+
+}
+
+
+
+
+
+
+
 // for computers...
 function keyPressed() {
-  shakeDice();
+  if (key === ' '){
+     shakeDice();
+  }
+ 
 }
 
 // for phones...
 function deviceShaken() {
   shakeDice();
 }
+
+
+//checks if all the dice match the pumpkins falling number
+function checkAllDiceMatch(){
+  let firstDieValue = dice[0].value;
+  for (let i = 1; i < dice.length; i++) {
+    if (dice[i].value !== firstDieValue) {
+      return false; // Not all dice are the same
+    }
+  }
+  return firstDieValue === pumpkin.fallingNumber; // Check if all dice match the falling number
+}
+
+
 
 // loop over the array of dice and try to roll each one in turn
 // (note that a die won't actually roll if it's frozen)
