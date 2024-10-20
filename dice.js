@@ -19,7 +19,7 @@ class Die {
     
     constructor(size) {
         this.size = size;
-        this.sides = 6;
+        this.sides = 10;
         this.frozen = false;
         this.place(random(width),random(height));
         this.roll();
@@ -33,15 +33,16 @@ class Die {
     display() {
         rectMode(CENTER);
         textAlign(CENTER, CENTER);
-        fill("white");
+        fill("#eb690b");
         strokeWeight(3);
         rect(this.x,this.y,this.size,this.size,8);
         if (this.frozen) {
-            fill("silver");
+            fill("#9bd21d");
+            strokeWeight(5);
         } else {
             fill("black");
         }
-        textSize(30);
+        textSize(40);
         text(this.value, this.x, this.y, this.size, this.size);
     }
 
@@ -73,4 +74,12 @@ class Die {
         } 
         return false;
     }
+
+
+
+
+
+
+
+
 }
