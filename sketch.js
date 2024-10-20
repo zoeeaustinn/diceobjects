@@ -45,10 +45,11 @@ function draw() {
 textSize(50);
 fill(255);
 textAlign(CENTER);
-text ("Match the die numbers", 260, 500);
-text ("before the pumpkin", 240, 550);
-text ("reaches the bottom.", 240, 600);
-text ("Hurry!", 240, 650);
+text ("Click the dice to", 270, 500);
+text ("match the die numbers", 270, 550);
+text ("BEFORE the pumpkin", 270, 600);
+text ("reaches the bottom.", 270, 650);
+text ("Hurry!", 240, 700);
 
 
 
